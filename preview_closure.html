@@ -1,0 +1,39 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Premature Closure</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="nav">
+    <a href="/">Dashboard</a>
+    <a href="/open">Open FD</a>
+    <a href="/accounts">Accounts</a>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>Premature Closure — Preview</h2>
+      <p><strong>FDID:</strong> {{ acc.FDID }} &nbsp; <strong>Customer:</strong> {{ acc.CustomerName }}</p>
+      <p><strong>Principal:</strong> ₹ {{ '{:,.2f}'.format(acc.Principal) }} &nbsp; <strong>Rate:</strong> {{ '{:.2f}'.format(acc.RateBps/100) }}% p.a.</p>
+      <p><strong>Start:</strong> {{ acc.StartDate }} &nbsp; <strong>Tenure:</strong> {{ acc.TenureDays }} days &nbsp; <strong>Days Elapsed:</strong> {{ details.days_elapsed }}</p>
+      <hr/>
+      {% if details.disallowed %}
+        <p class="badge red">Premature closure not allowed before 7 days.</p>
+      {% else %}
+        <p>Effective Rate after penalty: <strong>{{ '{:.2f}'.format(details.effective_rate_pct) }}%</strong></p>
+        <p>Interest earned (elapsed): <strong>₹ {{ '{:,.2f}'.format(details.interest_earned) }}</strong></p>
+        <p>TDS (placeholder): <strong>₹ {{ '{:,.2f}'.format(details.tds_amount) }}</strong></p>
+        <p>Net Payout if closed now: <strong>₹ {{ '{:,.2f}'.format(details.net_payout) }}</strong></p>
+        <form method="post">
+          <input type="hidden" name="mode" value="EXECUTE" />
+          <button class="btn danger" type="submit">Confirm Closure</button>
+          <a class="btn secondary" href="/accounts">Cancel</a>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FD Accounts</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="nav">
+    <a href="/">Dashboard</a>
+    <a href="/open">Open FD</a>
+    <a href="/accounts">Accounts</a>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="header">
+        <h2>FD Accounts</h2>
+        <form action="/accrual/run" method="post"><button class="btn" type="submit">Run Accrual</button></form>
+      </div>
+      <table class="table">
+        <thead><tr>
+          <th>FDID</th><th>Customer</th><th>Segment</th><th>Principal</th><th>Rate (%)</th><th>Start</th><th>Tenure</th><th>Status</th><th>Accrued</th><th>Actions</th>
+        </tr></thead>
+        <tbody>
+        {% for r in rows %}
+          <tr>
+            <td>{{ r.FDID }}</td>
+            <td>{{ r.CustomerName }}</td>
+            <td>{{ r.Segment }}</td>
+            <td>₹ {{ '{:,.2f}'.format(r.Principal) }}</td>
+            <td>{{ '{:.2f}'.format(r.RateBps/100) }}</td>
+            <td>{{ r.StartDate }}</td>
+            <td>{{ r.TenureDays }}</td>
+            <td><span class="badge {{ 'green' if r.Status=='OPEN' else ('gray' if r.Status=='MATURED' else 'red') }}">{{ r.Status }}</span></td>
+            <td>₹ {{ '{:,.2f}'.format(r.AccruedInterest) }}</td>
+            <td>
+              <a class="btn secondary" href="/accounts/{{ r.FDID }}/preview-closure">Premature Close</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

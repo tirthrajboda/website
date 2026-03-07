@@ -1,0 +1,103 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open FD</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="nav">
+    <a href="/">Dashboard</a>
+    <a href="/open">Open FD</a>
+    <a href="/accounts">Accounts</a>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>Open a Fixed Deposit</h2>
+      <form method="post">
+        <div class="grid">
+          <div>
+            <label>Customer Name</label>
+            <input name="CustomerName" required />
+          </div>
+          <div>
+            <label>Customer Segment</label>
+            <select name="Segment">
+              <option value="RETAIL">RETAIL</option>
+              <option value="SENIOR">SENIOR</option>
+              <option value="STAFF">STAFF</option>
+            </select>
+          </div>
+          <div>
+            <label>Principal (₹)</label>
+            <input name="Principal" type="number" step="0.01" required />
+          </div>
+          <div>
+            <label>Tenure (days)</label>
+            <input name="TenureDays" type="number" required />
+          </div>
+          <div>
+            <label>Start Date</label>
+            <input name="StartDate" type="date" value="{{ today }}" required />
+          </div>
+          <div>
+            <label>Payout Type</label>
+            <select name="PayoutType">
+              <option value="PAYOUT">PAYOUT</option>
+              <option value="CUMULATIVE">CUMULATIVE</option>
+            </select>
+          </div>
+          <div>
+            <label>Compounding</label>
+            <select name="Compounding">
+              <option>QUARTERLY</option>
+              <option>MONTHLY</option>
+              <option>ANNUAL</option>
+            </select>
+          </div>
+          <div>
+            <label>Maturity Instruction</label>
+            <select name="MaturityInstruction">
+              <option value="AUTO_RENEW_SAME">Auto-renew (same)</option>
+              <option value="AUTO_RENEW_CLOSEST">Auto-renew (closest)</option>
+              <option value="PAYOUT_CASA">Payout to CASA</option>
+              <option value="PAYOUT_EXTERNAL">Payout to external</option>
+              <option value="PARTIAL_RENEW">Partial renew</option>
+            </select>
+          </div>
+          <div>
+            <label>PAN Available?</label>
+            <select name="PANAvailable">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <div>
+            <label>Declaration Form</label>
+            <select name="DeclarationForm">
+              <option value="NONE">NONE</option>
+              <option value="15G">15G</option>
+              <option value="15H">15H</option>
+            </select>
+          </div>
+          <div>
+            <label>Residency Class</label>
+            <select name="ResidencyClass">
+              <option value="RESIDENT">RESIDENT</option>
+              <option value="NRO">NRO</option>
+              <option value="NRE">NRE</option>
+            </select>
+          </div>
+        </div>
+        <br />
+        <button class="btn" type="submit">Open FD</button>
+        {% if rate_info %}
+        <span class="subtitle" style="margin-left:10px">Selected Rate: {{ '{:.2f}'.format(rate_info/100) }} % p.a.</span>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</body>
+</html>
