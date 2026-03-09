@@ -1,0 +1,199 @@
+site:
+  lang: en
+  title: "Purple Portal - Separated"
+  meta:
+    charset: "UTF-8"
+    viewport: "width=device-width, initial-scale=1.0"
+  assets:
+    css:
+      - href: "style.css"
+      - inline: |
+          /* Small addition to handle side-by-side buttons */
+          .button-group {
+              display: flex;
+              gap: 10px;
+              margin-top: 10px;
+          }
+          .cancel-btn {
+              background-color: #6c757d !important; /* Grey color for cancel */
+          }
+    js:
+      - src: "script.js"
+
+layout:
+  header:
+    nav:
+      items:
+        - label: "Home"
+          action: "showSection('hero')"
+          active_color: null
+          href: null
+        - label: "Admin"
+          action: "showSection('admin-login-form')"
+          style: "color: #FFD700;"
+          href: null
+        - label: "Financials"
+          href: "#"
+          action: null
+        - label: "Career"
+          href: "#"
+          action: null
+    auth_buttons:
+      - label: "Login"
+        type: "button"
+        action: "showSection('login-form')"
+      - label: "Sign Up"
+        type: "button"
+        action: "showSection('signup-form')"
+
+pages:
+  - id: "hero"
+    type: "section"
+    style: "display: block; text-align: center;"
+    content:
+      heading: { level: 1, text: "Purple Web Services" }
+      paragraph: "Please Sign Up or Login to continue."
+
+  - id: "signup-form"
+    type: "form"
+    card: true
+    title: "Create Account"
+    form:
+      id: "regForm"
+      groups:
+        - label: "First Name"
+          required: true
+          field:
+            type: "text"
+            id: "fname"
+            placeholder: "Enter First Name"
+        - label: "Last Name"
+          required: true
+          field:
+            type: "text"
+            id: "lname"
+            placeholder: "Enter Last Name"
+        - label: "Email ID"
+          required: true
+          field:
+            type: "email"
+            id: "email"
+            placeholder: "example@mail.com"
+        - label: "Username"
+          required: true
+          field:
+            type: "text"
+            id: "user"
+            placeholder: "Choose Username"
+        - label: "Password"
+          required: true
+          field:
+            type: "password"
+            id: "pass"
+            placeholder: "Create Password"
+        - label: "Confirm Password"
+          required: true
+          field:
+            type: "password"
+            id: "confirm-pass"
+            placeholder: "Repeat Password"
+      actions:
+        layout: "row"  # uses .button-group styles
+        buttons:
+          - label: "Register"
+            type: "submit"
+            class: "submit-btn"
+            onClick: null
+          - label: "Cancel"
+            type: "button"
+            class: "submit-btn cancel-btn"
+            onClick: "handleCancel()"
+
+  - id: "login-form"
+    type: "form"
+    card: true
+    title: "Login"
+    form:
+      groups:
+        - label: "Username"
+          field:
+            type: "text"
+            id: "login-user"
+            placeholder: null
+        - label: "Password"
+          field:
+            type: "password"
+            id: "login-pass"
+            placeholder: null
+      actions:
+        buttons:
+          - label: "Enter Portal"
+            type: "button"
+            class: "submit-btn"
+            onClick: "handleLogin()"
+
+  - id: "admin-login-form"
+    type: "form"
+    card: true
+    title: "Admin Access"
+    title_style: "color: #8B0000;"
+    form:
+      groups:
+        - label: "Admin User"
+          field:
+            type: "text"
+            id: "admin-user"
+        - label: "Admin Pass"
+          field:
+            type: "password"
+            id: "admin-pass"
+      actions:
+        buttons:
+          - label: "Verify Admin"
+            type: "button"
+            class: "submit-btn"
+            style: "background-color: #000;"
+            onClick: "handleAdminLogin()"
+
+  - id: "admin-dashboard"
+    type: "section"
+    content:
+      heading:
+        level: 2
+        text: "Registered Users Database"
+        style: "color: #4B0082;"
+      table:
+        head:
+          columns:
+            - "First Name"
+            - "Last Name"
+            - "Email"
+            - "Username"
+            - "Password"
+        body_target: "user-table-body" # tbody id to be populated dynamically
+      actions:
+        buttons:
+          - label: "Exit Admin"
+            type: "button"
+            class: "submit-btn"
+            style: "max-width: 150px;"
+            onClick: "showSection('hero')"
+
+  - id: "welcome-page"
+    type: "section"
+    class: "welcome-msg"
+    content:
+      heading:
+        level: 1
+        id: "welcome-text"
+        text: "Your Welcome"
+      actions:
+        buttons:
+          - label: "Logout"
+            type: "button"
+            class: "submit-btn"
+            style: "max-width: 150px; margin: 0 auto; display: block;"
+            onClick: "location.reload()"
+
+footer:
+  text: "© 2026 Purple Corp. | Privacy Secured"
